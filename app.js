@@ -1,7 +1,9 @@
+require("dotenv").config();
 var express = require('express');
 var app = express();
 var cors = require('cors');
 var mongoose = require('mongoose');
+
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +21,6 @@ app.use(express.urlencoded({enabled:true}))
     });
 
 
-app.listen('3200', () => {
-    console.log('listening upon 3200');
+app.listen(process.env.PORT, () => {
+    console.log(`server listening up on  ${process.env.PORT}`);
 });
