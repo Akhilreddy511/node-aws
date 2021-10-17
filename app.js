@@ -1,4 +1,4 @@
-require("dotenv").config();
+
 var express = require('express');
 var app = express();
 var cors = require('cors');
@@ -6,8 +6,8 @@ var mongoose = require('mongoose');
 
 
 app.use(cors());
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
-app.use(express.urlencoded({enabled:true}))
      mongoose.connect('mongodb://127.0.0.1:27017/myApp', {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -20,7 +20,9 @@ app.use(express.urlencoded({enabled:true}))
         }
     });
 
+    let port = process.env.PORT || 3000
 
-app.listen(process.env.PORT, () => {
-    console.log(`server listening up on  ${process.env.PORT}`);
+app.listen(port, () => {
+    console.log(`server listening up on  ${port}`);
+
 });
