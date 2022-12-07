@@ -5,7 +5,8 @@ class Models {
 
     init(){
         return {
-            User: require('./userSchema')
+            User: require('./userSchema'),
+            Notepad: require('./notepadSchema')
         }
     }
 }

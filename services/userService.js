@@ -7,11 +7,48 @@ class UserService {
 
     async createUser(user) {
         try {
-            console.log("user::::", user)
             const userCreation = await this.db.User.create(user)
-
             return {
                 data: userCreation,
+                status: true
+            }
+        } catch (error) {
+            if (error.name == 'MongoError' && error.code === 11000){
+                return {
+                    data: 'Email Already Exists',
+                    status: false
+                }
+            }
+            return {
+                data: error.message,
+                status: false
+            }
+        }
+
+    }
+    async saveData(data) {
+        try {
+            const saveData = await this.db.Notepad.create(data)
+            return {
+                data: saveData,
+                status: true
+            }
+        } catch (error) {
+            return {
+                data: error.message,
+                status: false
+            }
+           
+        }
+
+    }
+    async getSavedData(user) {
+        try {
+            // console.log("user::::", user)
+            const allUsers = await this.db.Notepad.find({})
+
+            return {
+                data: allUsers,
                 status: false
             }
         } catch (error) {
@@ -27,7 +64,7 @@ class UserService {
     async login(user) {
         try {
             console.log("user::::", user)
-            const userFound = await this.db.User.findOne({ name: user.name, password: user.password })
+            const userFound = await this.db.User.findOne({ email: user.email, password: user.password })
 
             if (userFound) {
                 let data = JSON.parse(JSON.stringify(userFound));
@@ -107,7 +144,6 @@ class UserService {
     }
     async getUserById(user) {
         try {
-            console.log("user::::", user)
             const userCreation = await this.db.User.create(user)
 
             return {

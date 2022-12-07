@@ -4,7 +4,14 @@ const UserSchema = new mongoose.Schema({
     password:String,
     phone:String,
     age:String,
-    address:String
+    address:String,
+    profile:String,
+    email:{ 
+    type: String,
+    required: true,
+    match: /.+\@.+\..+/,
+    unique: 'This email is already taken ({VALUE})',
+}
 
 })
 
